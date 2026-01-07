@@ -63,7 +63,7 @@ public class Student {
     }
 
     private String GenerateReportHelper(Student student) {
-        if (student == null) return "Total course time: 0 hours";
+        if (student == null) return "Total course time: 0 hours" ;
 
         HashMap<String, Integer> courses = student.getCourses();
         if (courses == null || courses.isEmpty()) return "Total course time: 0 hours";
