@@ -1,71 +1,28 @@
-import java.util.Date;
-import java.util.HashMap;
+package service;
+
+import model.Student;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.DayOfWeek;
+import java.util.Date;
+import java.util.Map;
 
-public class Student {
-    private String name;
-    private String Curriculum;
-    private Date StartDate;
-    private HashMap<String, Integer> Courses;
+public class GenerateReport {
 
-    public Student(String name, String Curriculum, Date StartDate, HashMap<String, Integer> Courses) {
-        this.name = name;
-        this.Curriculum = Curriculum;
-        this.StartDate = StartDate;
-        this.Courses = Courses;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCurriculum() {
-        return Curriculum;
-    }
-
-    public Date getStartDate() {
-        return StartDate;
-    }
-
-    public HashMap<String, Integer> getCourses() {
-        return Courses;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCurriculum(String Curriculum) {
-        this.Curriculum = Curriculum;
-    }
-
-    public void setStartDate(Date StartDate) {
-        this.StartDate = StartDate;
-    }
-
-    public void setCourses(HashMap<String, Integer> Courses) {
-        this.Courses = Courses;
-    }
-
-    public void addCourse(String courseName, int duration) {
-        this.Courses.put(courseName, duration);
-    }
-
-    public String GenerateReport(Student student) {
+    public static String generateReport(Student student) {
         if (student == null) return "";
         String name = student.getName() == null ? "" : student.getName();
         String curriculum = student.getCurriculum() == null ? "" : student.getCurriculum();
-        return name + " (" + curriculum + ") - " + GenerateReportHelper(student);
+        return name + " (" + curriculum + ") - " + generateReportHelper(student);
     }
 
-    private String GenerateReportHelper(Student student) {
+    private static String generateReportHelper(Student student) {
         if (student == null) return "Total course time: 0 hours" ;
 
-        HashMap<String, Integer> courses = student.getCourses();
+        Map<String, Integer> courses = student.getCourses();
         if (courses == null || courses.isEmpty()) return "Total course time: 0 hours";
 
         int total = 0;

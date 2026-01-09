@@ -1,6 +1,10 @@
+import model.Student;
+
 import java.util.HashMap;
 import java.util.Date;
 import java.util.Calendar;
+
+import static service.GenerateReport.generateReport;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +17,6 @@ public class Main {
         Date start = cal.getTime();
 
         Student s = new Student("Alice", "CS", start, courses);
-        System.out.println(s.GenerateReport(s));
+        System.out.println(generateReport(s));
     }
 }
