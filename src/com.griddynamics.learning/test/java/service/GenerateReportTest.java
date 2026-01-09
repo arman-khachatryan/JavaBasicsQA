@@ -1,4 +1,4 @@
-package serviceTest;
+package service;
 
 import model.Student;
 import org.junit.jupiter.api.DisplayName;
