@@ -1,4 +1,4 @@
-package service;
+package com.griddynamics.learning.main.java.service;
 
 import model.Student;
 
@@ -10,9 +10,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 
-public class GenerateReport {
+public class Generator {
 
-    public static String generateReport(Student student) {
+    public String generateReport(Student student) {
         if (student == null) return "";
         String name = student.getName() == null ? "" : student.getName();
         String curriculum = student.getCurriculum() == null ? "" : student.getCurriculum();
