@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 
-public class Generator {
+public class ReportGenerator {
 
     public String generateReport(Student student) {
         if (student == null) return "";

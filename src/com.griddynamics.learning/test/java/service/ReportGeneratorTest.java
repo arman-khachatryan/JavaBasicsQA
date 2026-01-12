@@ -1,6 +1,6 @@
 package com.griddynamics.learning.test.java.service;
 
-import com.griddynamics.learning.main.java.service.Generator;
+import com.griddynamics.learning.main.java.service.ReportGenerator;
 import model.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +15,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
 
-public class GeneratorTest {
-    private static final Generator generateReport= new Generator();
+public class ReportGeneratorTest {
+    private static final ReportGenerator generateReport= new ReportGenerator();
 
 
 

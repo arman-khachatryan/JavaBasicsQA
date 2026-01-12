@@ -1,6 +1,6 @@
 package com.griddynamics.learning.main.java;
 
-import com.griddynamics.learning.main.java.service.Generator;
+import com.griddynamics.learning.main.java.service.ReportGenerator;
 import model.Student;
 
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 
 public class Main {
-    private static Generator generateReport;
+    private static final ReportGenerator reportGenerator=new ReportGenerator();
     public static void main(String[] args) {
         HashMap<String, Integer> courses = new HashMap<>();
         courses.put("Math", 16);
@@ -20,6 +20,6 @@ public class Main {
         Date start = cal.getTime();
 
         Student s = new Student("Alice", "CS", start, courses);
-        System.out.println(generateReport.generateReport(s));
+        System.out.println(reportGenerator.generateReport(s));
     }
 }
