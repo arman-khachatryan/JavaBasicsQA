@@ -1,6 +1,6 @@
-package com.griddynamics.learning.main.java.service;
+package com.griddynamics.learning.service;
 
-import model.Student;
+import main.java.model.Student;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,14 +12,14 @@ import java.util.Map;
 
 public class ReportGenerator {
 
-    public String generateReport(Student student) {
+    public String generate(Student student) {
         if (student == null) return "";
         String name = student.getName() == null ? "" : student.getName();
         String curriculum = student.getCurriculum() == null ? "" : student.getCurriculum();
-        return name + " (" + curriculum + ") - " + generateReportHelper(student);
+        return name + " (" + curriculum + ") - " + generateInternal(student);
     }
 
-    private static String generateReportHelper(Student student) {
+    private String generateInternal(Student student) {
         if (student == null) return "Total course time: 0 hours" ;
 
         Map<String, Integer> courses = student.getCourses();

@@ -1,8 +1,9 @@
-package model;
+package com.griddynamics.learning.model;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class Student {
@@ -59,4 +60,15 @@ public class Student {
         this.courses.put(courseName, duration);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name) && Objects.equals(curriculum, student.curriculum) && Objects.equals(startDate, student.startDate) && Objects.equals(courses, student.courses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, curriculum, startDate, courses);
+    }
 }

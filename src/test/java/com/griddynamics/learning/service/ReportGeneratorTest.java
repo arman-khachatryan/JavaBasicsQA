@@ -1,7 +1,6 @@
-package com.griddynamics.learning.test.java.service;
+package com.griddynamics.learning.service;
 
-import com.griddynamics.learning.main.java.service.ReportGenerator;
-import model.Student;
+import main.java.model.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,14 +15,14 @@ import java.util.stream.Stream;
 
 
 public class ReportGeneratorTest {
-    private static final ReportGenerator generateReport= new ReportGenerator();
+     ReportGenerator generateReport= new ReportGenerator();
 
 
 
     @Test
     @DisplayName("returns empty string when student is null")
     void returnsEmptyStringWhenStudentIsNull() {
-        String result = generateReport.generateReport(null);
+        String result = generateReport.generate(null);
         Assertions.assertEquals("", result);
     }
 
@@ -33,7 +32,7 @@ public class ReportGeneratorTest {
         HashMap<String, Integer> courses = new HashMap<>();
         courses.put("A", 1);
         Student student = new Student(null, null, null, courses);
-        String result = generateReport.generateReport(student);
+        String result = generateReport.generate(student);
         Assertions.assertTrue(result.startsWith(" ("), "expected empty name and curriculum placeholders");
         Assertions.assertTrue(result.contains("Total course time: 1 hours") || result.contains("Total course time: 1 hour"));
     }
@@ -44,7 +43,7 @@ public class ReportGeneratorTest {
         HashMap<String, Integer> courses = new HashMap<>();
         courses.put("Course1", 5);
         Student student = new Student("Alice", "Java", null, courses);
-        String result = generateReport.generateReport(student);
+        String result = generateReport.generate(student);
         Assertions.assertTrue(result.contains("Total course time: 5 hours. Start date: unknown."));
     }
 
@@ -55,7 +54,7 @@ public class ReportGeneratorTest {
         courses.put("Course1", 48);
         Date start = Date.from(Instant.now().minus(10, ChronoUnit.HOURS));
         Student student = new Student("Bob", "Dev", start, courses);
-        String result = generateReport.generateReport(student);
+        String result = generateReport.generate(student);
         Assertions.assertTrue(result.contains("Training not finished."));
         Assertions.assertTrue(result.contains("left"));
     }
@@ -67,7 +66,7 @@ public class ReportGeneratorTest {
         courses.put("Course1", 10);
         Date start = Date.from(Instant.now().minus(70, ChronoUnit.HOURS));
         Student student = new Student("Eve", "Sec", start, courses);
-        String result = generateReport.generateReport(student);
+        String result = generateReport.generate(student);
         Assertions.assertTrue(result.contains("Training completed."));
         Assertions.assertTrue(result.contains("ago."));
     }
@@ -78,8 +77,8 @@ public class ReportGeneratorTest {
         Student studentNullCourses = new Student("Sam", "CS", new Date(), null);
         Student studentEmptyCourses = new Student("Sam", "CS", new Date(), new HashMap<>());
 
-        String r1 = generateReport.generateReport(studentNullCourses);
-        String r2 = generateReport.generateReport(studentEmptyCourses);
+        String r1 = generateReport.generate(studentNullCourses);
+        String r2 = generateReport.generate(studentEmptyCourses);
 
         Assertions.assertTrue(r1.contains("Total course time: 0 hours"));
         Assertions.assertTrue(r2.contains("Total course time: 0 hours"));
@@ -94,7 +93,7 @@ public class ReportGeneratorTest {
         courses.put("Course1", 16);
         Student student = new Student("Test", "Test", startDate, courses);
 
-        String result = generateReport.generateReport(student);
+        String result = generateReport.generate(student);
         System.out.println(result);
         Assertions.assertNotNull(result);
         Assertions.assertFalse(result.isEmpty(), "generateReport returned an empty string for start: " + isoTimestamp);
