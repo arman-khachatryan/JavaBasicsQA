@@ -1,6 +1,6 @@
 package com.griddynamics.learning.service;
 
-import main.java.model.Student;
+import com.griddynamics.learning.model.Student;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

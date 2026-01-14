@@ -1,7 +1,7 @@
 package com.griddynamics.learning;
 
 import com.griddynamics.learning.service.ReportGenerator;
-import main.java.model.Student;
+import com.griddynamics.learning.model.Student;
 
 import java.util.HashMap;
 import java.util.Date;

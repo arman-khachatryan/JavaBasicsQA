@@ -1,6 +1,6 @@
 package com.griddynamics.learning.service;
 
-import main.java.model.Student;
+import com.griddynamics.learning.model.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
