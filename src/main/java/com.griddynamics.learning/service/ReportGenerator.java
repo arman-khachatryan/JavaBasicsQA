@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -35,6 +36,22 @@ public class ReportGenerator{
             return "Total course time: " + total + " hours. Start date: unknown.";
         }
 
+        long hoursElapsed = calculateTimePassed(startDate);
+        long hourDifference = hoursElapsed - total;
+        long absHours = Math.abs(hourDifference);
+        long days = absHours / 24;
+        long hours = absHours % 24;
+        String formatted = (days > 0 ? days + (days == 1 ? " day" : " days" ) : "") + (days>0 && hours>0 ? " and ": "") + (hours > 0 ? hours + (hours == 1 ? " hour" : " hours" ) : "");
+
+        if (hourDifference < 0) {
+            return "Training not finished. " + formatted  + " left";
+        } else {
+            return "Training completed. " + formatted + " ago.";
+        }
+
+    }
+
+    private Long calculateTimePassed(Date startDate) {
         ZoneId zone = ZoneId.systemDefault();
         ZonedDateTime startZdt = ZonedDateTime.ofInstant(startDate.toInstant(), zone);
         ZonedDateTime nowZdt = ZonedDateTime.now(zone);
@@ -59,17 +76,6 @@ public class ReportGenerator{
                 hoursElapsed += hrs;
             }
         }
-        long hourDifference = hoursElapsed - total;
-        long absHours = Math.abs(hourDifference);
-        long days = absHours / 24;
-        long hours = absHours % 24;
-        String formatted = (days > 0 ? days + (days == 1 ? " day" : " days" ) : "") + (days>0 && hours>0 ? " and ": "") + (hours > 0 ? hours + (hours == 1 ? " hour" : " hours" ) : "");
-
-        if (hourDifference < 0) {
-            return "Training not finished. " + formatted  + " left";
-        } else {
-            return "Training completed. " + formatted + " ago.";
-        }
-
+        return hoursElapsed;
     }
 }
