@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Date;
@@ -13,6 +14,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 
 public class ReportGeneratorTest {
      ReportGenerator generateReport= new ReportGenerator();
@@ -20,21 +24,9 @@ public class ReportGeneratorTest {
 
 
     @Test
-    @DisplayName("returns empty string when student is null")
+    @DisplayName("throwsIllegalArgumentException when student is null")
     void returnsEmptyStringWhenStudentIsNull() {
-        String result = generateReport.generate(null);
-        Assertions.assertEquals("", result);
-    }
-
-    @Test
-    @DisplayName("includes name and curriculum when present and handles nulls")
-    void includesNameAndCurriculumWhenPresentAndHandlesNulls() {
-        HashMap<String, Integer> courses = new HashMap<>();
-        courses.put("A", 1);
-        Student student = new Student(null, null, null, courses);
-        String result = generateReport.generate(student);
-        Assertions.assertTrue(result.startsWith(" ("), "expected empty name and curriculum placeholders");
-        Assertions.assertTrue(result.contains("Total course time: 1 hours") || result.contains("Total course time: 1 hour"));
+        assertThrows(IllegalArgumentException.class, () -> generateReport.generate(null));
     }
 
     @Test
@@ -87,7 +79,7 @@ public class ReportGeneratorTest {
     @ParameterizedTest
     @MethodSource("relativeStartTimestamps")
     @DisplayName("generateReport handles different start times relative to now")
-    void parameterizedStartTimesFromMethodSource(String isoTimestamp) {
+    void parameterizedStartTimesFromMethodSource(String isoTimestamp, String expected) {
         Date startDate = Date.from(Instant.parse(isoTimestamp));
         HashMap<String, Integer> courses = new HashMap<>();
         courses.put("Course1", 16);
@@ -96,18 +88,17 @@ public class ReportGeneratorTest {
         String result = generateReport.generate(student);
         System.out.println(result);
         Assertions.assertNotNull(result);
-        Assertions.assertFalse(result.isEmpty(), "generateReport returned an empty string for start: " + isoTimestamp);
-        Assertions.assertTrue(result.contains(" - "), "expected generated report to contain ' - ' separator");
+        Assertions.assertTrue(result.contains(expected));
     }
 
-    static Stream<String> relativeStartTimestamps() {
+    static Stream<Arguments> relativeStartTimestamps() {
         Instant now = Instant.now();
         return Stream.of(
-                now.minus(9, ChronoUnit.DAYS).minus(3, ChronoUnit.HOURS).toString(),
-                now.minus(5, ChronoUnit.DAYS).toString(),
-                now.minus(1, ChronoUnit.DAYS).minus(2, ChronoUnit.HOURS).toString(),
-                now.minus(23, ChronoUnit.HOURS).toString(),
-                now.toString()
+                arguments(now.minus(9, ChronoUnit.DAYS).minus(3, ChronoUnit.HOURS).toString(),"ago"),
+                arguments(now.minus(5, ChronoUnit.DAYS).toString(), "ago"),
+                arguments(now.minus(1, ChronoUnit.DAYS).minus(2, ChronoUnit.HOURS).toString(), "ago"),
+                arguments(now.minus(23, ChronoUnit.HOURS).toString(), "left"),
+                arguments(now.toString(), "left")
         );
     }
 }

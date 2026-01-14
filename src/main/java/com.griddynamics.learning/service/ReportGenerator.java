@@ -10,10 +10,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 
-public class ReportGenerator {
+public class ReportGenerator{
 
     public String generate(Student student) {
-        if (student == null) return "";
+        if (student == null) throw new IllegalArgumentException("student cannot be null");
         String name = student.getName() == null ? "" : student.getName();
         String curriculum = student.getCurriculum() == null ? "" : student.getCurriculum();
         return name + " (" + curriculum + ") - " + generateInternal(student);
